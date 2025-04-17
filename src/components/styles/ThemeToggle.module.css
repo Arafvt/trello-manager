@@ -1,0 +1,24 @@
+.themeToggle {
+  background: transparent;
+  border: 2px solid #75c8bb;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #75c8bb;
+  transition: all 0.3s;
+}
+
+.themeToggle:hover {
+  background: #75c8bb;
+  color: white;
+}
+
+:global(.dark) .themeToggle {
+  border-color: #222831;
+  color: #5faea2;
+}
+
+:global(.dark) .themeToggle:hover {
+  background: #222831;
+  color: white;
+}

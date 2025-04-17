@@ -1,0 +1,77 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #00a49b, #026773, #56cbe1);
+  --title-bg: rgba(255, 255, 255, 0.2);
+  --title-color: #ffffff;
+  --board-bg: rgba(169, 208, 209, 0.8);
+  --board-hover-bg: rgba(199, 242, 243, 0.8);
+  --board-text-color: #ffffff;
+  --add-board-bg: rgba(255, 255, 255, 0.3);
+  --add-board-hover-bg: rgba(255, 255, 255, 0.4);
+  --add-board-border: rgba(255, 255, 255, 0.5);
+  --edit-btn-bg: rgba(255, 255, 255, 0.2);
+  --edit-btn-color: #ffffff;
+  --delete-btn-bg: rgba(169, 208, 209, 0.8);
+  --task-bg: #d0e4e6;
+  --task-text-color: #333;
+  --input-border: #ccc;
+  --input-focus: #75c8bb;
+  --btn-bg: #75c8bb;
+  --btn-hover: #5faea2;
+  --error-color: red;
+  --backdrop-blur: blur(10px);
+}
+
+.dark {
+  --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --title-bg: rgba(0, 0, 0, 0.4);
+  --title-color: #e0e0e0;
+  --board-bg: rgba(60, 90, 100, 0.8);
+  --board-hover-bg: rgba(80, 110, 120, 0.8);
+  --board-text-color: #e0e0e0;
+  --add-board-bg: rgba(0, 0, 0, 0.3);
+  --add-board-hover-bg: rgba(0, 0, 0, 0.4);
+  --add-board-border: rgba(255, 255, 255, 0.3);
+  --edit-btn-bg: rgba(255, 255, 255, 0.1);
+  --edit-btn-color: #e0e0e0;
+  --delete-btn-bg: rgba(60, 90, 100, 0.8);
+  --task-bg: rgba(255, 255, 255, 0.1);
+  --task-text-color: #e0e0e0;
+  --input-border: #aaa;
+  --input-focus: #5faea2;
+  --btn-bg: #5faea2;
+  --btn-hover: #75c8bb;
+  --error-color: #ff6b6b;
+  --backdrop-blur: blur(10px);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--board-text-color);
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}
+
+.error {
+  color: var(--error-color);
+  font-weight: bold;
+  margin: 10px 0;
+}

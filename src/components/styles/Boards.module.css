@@ -1,0 +1,210 @@
+.boardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  color: white;
+}
+
+.boardTitle {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.backLink {
+  display: block;
+  width: 135px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.backLink:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  color: white;
+}
+
+.columns {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  align-items: flex-start;
+}
+
+.column {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  width: 260px;
+  min-height: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.column:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.columnTitle {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-grow: 1;
+  transition: color 0.2s;
+}
+
+.columnTitle:hover {
+  color: #d1f5f0;
+}
+
+.columnInput {
+  flex-grow: 1;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  width: 50px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.columnInput:focus {
+  border-color: #75c8bb;
+}
+
+.saveBtn,
+.deleteColumnBtn {
+  background-color: #75c8bb;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.saveBtn:hover,
+.deleteColumnBtn:hover {
+  background-color: #5faea2;
+  transform: translateY(-1px);
+}
+
+.deleteColumnBtn {
+  margin-left: auto; 
+}
+
+.addColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.addColumn input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+.addColumn button {
+  width: 100%;
+  padding: 10px;
+  background: #75c8bb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.addColumn button:hover {
+  background: #5faea2;
+  transform: translateY(-1px);
+}
+
+.error {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+:global(.dark) .column {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .column:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .columnInput {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  border-color: #444;
+}
+
+:global(.dark) .addColumn input {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  border-color: #555;
+}
+
+:global(.dark) .addColumn button {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .addColumn button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .deleteColumnBtn {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .deleteColumnBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .saveBtn {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .saveBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,149 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 50px;
+  width: 100vw;  
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.boardList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 0 50px;
+  max-height: calc(100vh - 120px); 
+  overflow-y: auto; 
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.boardItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boardLink {
+  width: 325px;
+  height: 200px;
+  background-color: rgba(169, 208, 209, 0.8);
+  padding-top: 70px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 30px;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  text-align: center;
+}
+
+.boardLink:hover {
+  background-color: rgba(199, 242, 243, 0.8);
+  transform: translateY(-3px);
+  color: #ffffff;
+}
+
+.addBoard {
+  width: 325px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addBoard:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(169, 208, 209, 0.8); 
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.deleteBtn:hover, .editBtn:hover {
+  background: rgba(199, 242, 243, 0.8); 
+}
+
+.editBtn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.error {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+:global(.dark) body {
+  background: linear-gradient(135deg, #1a1a1a, #222831, #393e46);
+}
+
+:global(.dark) .boardLink {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+}
+
+:global(.dark) .boardLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+:global(.dark) .addBoard {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #e0e0e0;
+}
+
+:global(.dark) .addBoard:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+:global(.dark) .editBtn,
+:global(.dark) .deleteBtn {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #e0e0e0;
+}

@@ -1,0 +1,64 @@
+{
+  "boards": [
+    {
+      "id": "7a08",
+      "name": "goal"
+    },
+    {
+      "id": "b629",
+      "name": "school"
+    },
+    {
+      "id": "2f7d",
+      "name": "rest"
+    },
+    {
+      "id": "91ae",
+      "name": "travel"
+    }
+  ],
+  "columns": [
+    {
+      "id": "999f",
+      "boardId": "2",
+      "name": "study"
+    },
+    {
+      "id": "5f71",
+      "boardId": "b629",
+      "name": "home work"
+    },
+    {
+      "id": "281b",
+      "boardId": "7a08",
+      "name": "buy car"
+    },
+    {
+      "id": "bb7d",
+      "boardId": "7a08",
+      "name": "business"
+    },
+    {
+      "id": "9fb2",
+      "boardId": "7a08",
+      "name": "Hadj"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "c578",
+      "columnId": "281b",
+      "name": "audi rs7"
+    },
+    {
+      "id": "ef66",
+      "columnId": "281b",
+      "name": "lexus 470"
+    },
+    {
+      "id": "2393",
+      "columnId": "bb7d",
+      "name": "clothes"
+    }
+  ]
+}
