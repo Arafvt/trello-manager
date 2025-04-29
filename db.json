@@ -59,6 +59,16 @@
       "id": "2393",
       "columnId": "bb7d",
       "name": "clothes"
+    },
+    {
+      "id": "688f",
+      "columnId": "bb7d",
+      "name": "shoes"
+    },
+    {
+      "id": "6744",
+      "columnId": "9fb2",
+      "name": "umra"
     }
   ]
 }

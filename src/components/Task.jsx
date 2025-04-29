@@ -1,116 +1,106 @@
-import React, { useEffect, useState } from "react";
-import { getTasks, addTask, deleteTask, updateTask } from "../api/api"; 
-import styles from "./styles/Task.module.css"; 
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchTasks,
+  createTask,
+  removeTask,
+  editTask
+} from "../store/tasksSlice";
+import styles from "./styles/Task.module.css";
 
 export const Task = ({ columnId }) => {
-  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+  const { items: tasks, status } = useSelector(state => state.tasks);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editedTaskName, setEditedTaskName] = useState("");
-  const [isAddingTask, setIsAddingTask] = useState(false);  
-  const [newTaskName, setNewTaskName] = useState(""); 
-  const [error, setError] = useState("");
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [newTaskName, setNewTaskName] = useState("");
 
+  const columnTasks = tasks.filter(task => 
+    String(task.columnId) === String(columnId)
+  );
+  
   useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        const data = await getTasks(columnId);
-        setTasks(data);
-        setError("");
-      } catch (err) {
-        setError("Failed to load tasks.");
-      }
-    };
-    loadTasks();
-  }, [columnId]);
+    dispatch(fetchTasks(columnId)); 
+  }, [columnId, dispatch]);
 
-  const handleAddTask = async () => {
+  const handleAddTask = () => {
     if (!newTaskName.trim()) return;
-    try {
-      const newTask = await addTask(columnId, newTaskName);
-      setTasks(prev => [...prev, newTask]);
-      setNewTaskName("");
-      setIsAddingTask(false);
-      setError("");
-    } catch (err) {
-      setError("Failed to add task.");
-    }
-  };
-  
-  const handleDeleteTask = async (taskId) => {
-    try {
-      await deleteTask(taskId);
-      setTasks(prev => prev.filter(task => task.id !== taskId));
-      setError("");
-    } catch (err) {
-      setError("Failed to delete task.");
-    }
-  };
-  
-  const handleUpdateTask = async (taskId) => {
-    if (!editedTaskName.trim()) return;
-    try {
-      await updateTask(taskId, editedTaskName);
-      setTasks(prev =>
-        prev.map(task => task.id === taskId ? { ...task, name: editedTaskName } : task)
-      );
-      setEditingTaskId(null);
-      setError("");
-    } catch (err) {
-      setError("Failed to update task.");
-    }
+    dispatch(createTask({ columnId, name: newTaskName }));
+    setNewTaskName("");
+    setIsAddingTask(false);
   };
 
-  const handleCancelAddTask = () => {
-    setIsAddingTask(false); 
-    setNewTaskName(""); 
+  const handleDeleteTask = (taskId) => {
+    dispatch(removeTask(taskId));
   };
+
+  const handleUpdateTask = (taskId) => {
+    if (!editedTaskName.trim()) return;
+    dispatch(editTask({ taskId, newName: editedTaskName }));
+    setEditingTaskId(null);
+  };
+
+  if (status === 'loading') {
+    return <div>Loading tasks...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className={styles.tasksContainer}>
-      {error && <div className={styles.error}>{error}</div>}
-      {tasks.map((task) => (
+      {status === 'loading' && <div>Loading tasks...</div>}
+      {status === 'succeeded' && columnTasks.length === 0 && (
+        <div className={styles.noTasks}>No tasks yet</div>
+      )}
+      {columnTasks.map((task) => (
         <div key={task.id} className={styles.task}>
           {editingTaskId === task.id ? (
             <>
-              <input
-                type="text"
-                value={editedTaskName}
-                onChange={(e) => setEditedTaskName(e.target.value)}
-                className={styles.taskInput}
+              <input 
+                type="text" 
+                value={editedTaskName} 
+                onChange={(e) => setEditedTaskName(e.target.value)} 
+                className={styles.taskInput} 
               />
-              <button onClick={() => handleUpdateTask(task.id)} className={styles.saveBtn}>
-                ✔
-              </button>
+              <button onClick={() => handleUpdateTask(task.id)} className={styles.saveBtn}>✔️</button>
             </>
           ) : (
             <>
-              <span onDoubleClick={() => {
-                setEditingTaskId(task.id);
-                setEditedTaskName(task.name);
-              }}>
+              <span 
+                onDoubleClick={() => {
+                  setEditingTaskId(task.id);
+                  setEditedTaskName(task.name);
+                }}
+              >
                 {task.name}
               </span>
-              <button onClick={() => handleDeleteTask(task.id)} className={styles.deleteBtn}>
-                х
-              </button>
+              <button onClick={() => handleDeleteTask(task.id)} className={styles.deleteBtn}>х</button>
             </>
           )}
         </div>
       ))}
-      
+
       {!isAddingTask ? (
         <span onClick={() => setIsAddingTask(true)} className={styles.addTaskText}>+ Add Task</span>
       ) : (
         <div className={styles.addTaskInputContainer}>
-          <input
-            type="text"
-            value={newTaskName}
-            onChange={(e) => setNewTaskName(e.target.value)}
-            className={styles.taskInput}
-            placeholder="Enter task name"
+          <input 
+            type="text" 
+            value={newTaskName} 
+            onChange={(e) => setNewTaskName(e.target.value)} 
+            className={styles.taskInput} 
+            placeholder="Enter task name" 
           />
           <button onClick={handleAddTask} className={styles.addTaskBtn}>Add</button>
-          <button onClick={handleCancelAddTask} className={styles.cancelBtn}>х</button>
+          <button 
+            onClick={() => { setIsAddingTask(false); setNewTaskName(""); }} 
+            className={styles.cancelBtn}
+          >
+            х
+          </button>
         </div>
       )}
     </div>

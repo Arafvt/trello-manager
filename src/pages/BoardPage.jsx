@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Boards } from "../components/Boards";
-import { getBoards } from "../api/boardsApi";
+import { fetchBoards } from "../store/boardsSlice";
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const [board, setBoard] = useState(null);
+  const dispatch = useDispatch();
+  const boards = useSelector(state => state.boards.items);
+  const board = boards.find(board => board.id === id);
 
   useEffect(() => {
-    const loadBoard = async () => {
-      const boards = await getBoards();
-      const foundBoard = boards.find((board) => board.id === id);
-
-      setBoard(foundBoard);
-    };
-
-    loadBoard();
-  }, [id]);
+    if (boards.length === 0) {
+      dispatch(fetchBoards());
+    }
+  }, [dispatch, boards.length]);
 
   if (!board) return <p>Board not found</p>;
 

@@ -1,113 +1,104 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";  
-import { getColumns, addColumn, deleteColumn, updateColumn } from "../api/api";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchColumns,
+  createColumn,
+  removeColumn,
+  editColumn
+} from "../store/columnsSlice";
 import { Task } from "./Task";
 import styles from "./styles/Boards.module.css";
 
 export const Boards = ({ boardId, boardName }) => {
-  const [columns, setColumns] = useState([]);
+  const dispatch = useDispatch();
+  const { items: allColumns, status, error } = useSelector(state => state.columns);
   const [newColumnName, setNewColumnName] = useState("");
   const [editingColumn, setEditingColumn] = useState(null);
   const [editedColumnName, setEditedColumnName] = useState("");
-  const [error, setError] = useState("");
+
+  const columns = allColumns.filter(column => String(column.boardId) === String(boardId));
 
   useEffect(() => {
-    const loadColumns = async () => {
-      try {
-        const data = await getColumns(boardId);
-        setColumns(data);
-        setError("");
-      } catch (err) {
-        setError("Failed to load columns.");
-      }
-    };
-    loadColumns();
-  }, [boardId]);
-
+    dispatch(fetchColumns(boardId));
+  }, [boardId, dispatch]);
   const handleAddColumn = async () => {
     if (!newColumnName.trim()) return;
     try {
-      const newColumn = await addColumn(boardId, newColumnName);
-      setColumns([...columns, newColumn]);
+      await dispatch(createColumn({ boardId, name: newColumnName })).unwrap();
       setNewColumnName("");
-      setError("");
     } catch (err) {
-      setError("Failed to add column.");
+      console.error("Failed to add column:", err);
     }
   };
 
-  const handleDeleteColumn = async (columnId) => {
-    try {
-      await deleteColumn(columnId);
-      setColumns(columns.filter(column => column.id !== columnId));
-      setError("");
-    } catch (err) {
-      setError("Failed to delete column.");
-    }
+  const handleDeleteColumn = (columnId) => {
+    dispatch(removeColumn(columnId));
   };
 
-  const handleUpdateColumn = async (columnId) => {
+  const handleUpdateColumn = (columnId) => {
     if (!editedColumnName.trim()) return;
-    try {
-      await updateColumn(columnId, editedColumnName);
-      setColumns(columns.map(col => col.id === columnId ? { ...col, name: editedColumnName } : col));
-      setEditingColumn(null);
-      setError("");
-    } catch (err) {
-      setError("Failed to update column.");
-    }
+    dispatch(editColumn({ columnId, newName: editedColumnName }));
+    setEditingColumn(null);
   };
+
+  if (status === 'loading') {
+    return <div>Loading columns...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className={styles.boardContainer}>
       <Link to="/" className={styles.backLink}>Back to Home</Link>
       <h1 className={styles.boardTitle}>{boardName}</h1>
       {error && <div className={styles.error}>{error}</div>}
+      
       <div className={styles.columns}>
         {columns.map((column) => (
           <div key={column.id} className={styles.column}>
             <div className={styles.columnHeader}>
               {editingColumn === column.id ? (
                 <>
-                  <input
-                    type="text"
-                    value={editedColumnName}
-                    onChange={(e) => setEditedColumnName(e.target.value)}
-                    className={styles.columnInput}
+                  <input 
+                    type="text" 
+                    value={editedColumnName} 
+                    onChange={(e) => setEditedColumnName(e.target.value)} 
+                    className={styles.columnInput} 
                   />
-                  <button
-                    onClick={() => handleUpdateColumn(column.id)}
-                    className={styles.saveBtn}
-                  >
-                    ✔
-                  </button>
+                  <button onClick={() => handleUpdateColumn(column.id)} className={styles.saveBtn}>✔️</button>
                 </>
               ) : (
-                <h2 onDoubleClick={() => {
-                  setEditingColumn(column.id);
-                  setEditedColumnName(column.name);
-                }} className={styles.columnTitle}>
+                <h2 
+                  onDoubleClick={() => {
+                    setEditingColumn(column.id);
+                    setEditedColumnName(column.name);
+                  }} 
+                  className={styles.columnTitle}
+                >
                   {column.name}
                 </h2>
               )}
-              <button
-                className={styles.deleteColumnBtn}
+              <button 
+                className={styles.deleteColumnBtn} 
                 onClick={() => handleDeleteColumn(column.id)}
               >
                 X
               </button>
             </div>
-
             <Task columnId={column.id} />
           </div>
         ))}
       </div>
+
       <div className={styles.addColumn}>
-        <input
-          type="text"
-          value={newColumnName}
-          onChange={(e) => setNewColumnName(e.target.value)}
-          placeholder="Enter column name"
+        <input 
+          type="text" 
+          value={newColumnName} 
+          onChange={(e) => setNewColumnName(e.target.value)} 
+          placeholder="Enter column name" 
         />
         <button onClick={handleAddColumn}>Add Column</button>
       </div>
