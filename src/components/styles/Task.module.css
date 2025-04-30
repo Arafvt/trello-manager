@@ -3,6 +3,7 @@
 }
 
 .task {
+  user-select: none;
   background-color: #d0e4e6;
   padding: 8px;
   margin: 5px 0;
@@ -11,6 +12,11 @@
   justify-content: space-between;
   align-items: center;
   color: #333;
+  cursor: grab;
+}
+
+.task:active {
+  cursor: grabbing;
 }
 
 .taskInput {

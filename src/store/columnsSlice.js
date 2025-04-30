@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getColumns, addColumn, deleteColumn, updateColumn } from '../api/api';
+import { getColumns, addColumn, deleteColumn, updateColumn, reorderColumns as apiReorderColumns } from '../api/api';
 
 export const fetchColumns = createAsyncThunk('columns/fetchColumns', async (boardId) => {
   const response = await getColumns(boardId);
@@ -18,6 +18,14 @@ export const removeColumn = createAsyncThunk('columns/removeColumn', async (colu
 export const editColumn = createAsyncThunk('columns/editColumn', async ({ columnId, newName }) => {
   return await updateColumn(columnId, newName);
 });
+
+export const reorderColumns = createAsyncThunk(
+  'columns/reorder',
+  async ({ boardId, columns }) => {
+    await apiReorderColumns(boardId, columns); 
+    return columns;
+  }
+);
 
 const columnsSlice = createSlice({
   name: 'columns',
@@ -52,6 +60,13 @@ const columnsSlice = createSlice({
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+      })
+      .addCase(reorderColumns.fulfilled, (state, action) => {
+        const updatedColumns = action.payload;
+        state.items = state.items.map(col => {
+          const updatedCol = updatedColumns.find(uc => uc.id === col.id);
+          return updatedCol ? { ...col, order: updatedCol.order } : col;
+        });
       });
   },
 });

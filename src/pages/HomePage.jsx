@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { 
@@ -22,21 +22,20 @@ export const HomePage = () => {
     dispatch(fetchBoards());
   }, [dispatch]);
 
-  const handleAddBoard = (boardName) => {
-    if (!boardName.trim()) return;
+  const handleAddBoard = useCallback((boardName) => {
     dispatch(createBoard(boardName));
     setIsModalOpen(false);
-  };
+  }, [dispatch]);
 
-  const handleDeleteBoard = (id) => {
+  const handleDeleteBoard = useCallback((id) => {
     dispatch(removeBoard(id));
-  };
+  }, [dispatch]);
 
-  const handleEditBoard = (boardId, newName) => {
+  const handleEditBoard = useCallback((boardId, newName) => {
     if (!newName.trim()) return;
     dispatch(editBoard({ id: boardId, newName }));
     setIsEditModalOpen(false);
-  };
+  }, [dispatch]);
 
   const openEditModal = (board) => {
     setCurrentBoard(board);

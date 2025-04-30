@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getTasks, addTask, deleteTask, updateTask } from '../api/api';
+import { getTasks, addTask, deleteTask, updateTask, reorderTasks as apiReorderTasks } from '../api/api';
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (columnId) => {
   const response = await getTasks(columnId);
@@ -19,6 +19,14 @@ export const removeTask = createAsyncThunk('tasks/removeTask', async (taskId) =>
 export const editTask = createAsyncThunk('tasks/editTask', async ({ taskId, newName }) => {
   return await updateTask(taskId, newName);
 });
+
+export const reorderTasks = createAsyncThunk(
+  'tasks/reorder',
+  async ({ columnId, tasks }) => {
+    await apiReorderTasks(columnId, tasks);
+    return tasks;
+  }
+);
 
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -56,6 +64,13 @@ const tasksSlice = createSlice({
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+      })
+      .addCase(reorderTasks.fulfilled, (state, action) => {
+        const updatedTasks = action.payload;
+        state.items = state.items.map(task => {
+          const updatedTask = updatedTasks.find(ut => ut.id === task.id);
+          return updatedTask ? { ...task, order: updatedTask.order } : task;
+        });
       });
   },
 });

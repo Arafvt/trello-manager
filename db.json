@@ -19,11 +19,6 @@
   ],
   "columns": [
     {
-      "id": "999f",
-      "boardId": "2",
-      "name": "study"
-    },
-    {
       "id": "5f71",
       "boardId": "b629",
       "name": "home work"
@@ -69,6 +64,11 @@
       "id": "6744",
       "columnId": "9fb2",
       "name": "umra"
+    },
+    {
+      "id": "e7f4",
+      "columnId": "9fb2",
+      "name": "hajj"
     }
   ]
 }
