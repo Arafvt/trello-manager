@@ -8,10 +8,17 @@
   color: white;
 }
 
-.boardTitle {
-  font-size: 40px;
-  font-weight: 600;
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
+  width: 100%;
+}
+
+.boardTitle {
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .backLink {
@@ -24,6 +31,7 @@
   background: rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   transition: background 0.3s, transform 0.2s;
+  text-align: center;
 }
 
 .backLink:hover {
@@ -52,6 +60,10 @@
   display: flex;
   flex-direction: column;
   transition: background 0.3s, box-shadow 0.3s;
+}
+
+.column.isDragging {
+  background: lightgreen;
 }
 
 .column:hover {
@@ -188,25 +200,68 @@
 }
 
 :global(.dark) .addColumn button {
-  background: rgba(255, 255, 255, 0.05);
+  background-color: #2a7a6d;
 }
 
 :global(.dark) .addColumn button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #1f5c53;
 }
 
 :global(.dark) .deleteColumnBtn {
-  background: rgba(255, 255, 255, 0.05);
+  background-color: #2a7a6d;
 }
 
 :global(.dark) .deleteColumnBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #1f5c53;
 }
 
 :global(.dark) .saveBtn {
-  background: rgba(255, 255, 255, 0.05);
+  background-color: #2a7a6d;
 }
 
 :global(.dark) .saveBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #1f5c53;
+}
+
+@media (max-width: 768px) {
+  .boardContainer {
+    padding: 15px;
+    height: 505px;
+  }
+
+  .boardHeader {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .boardTitle {
+    font-size: 20px;
+  }
+
+  .backLink {
+    padding: 8px 12px;
+    font-size: 14px;
+    width: auto;
+  }
+
+  .columns {
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+  }
+
+  .column {
+    width: 100%;
+    min-height: 200px;
+  }
+
+  .addColumn {
+    width: 100%;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .columnTitle {
+    font-size: 18px;
+  }
 }

@@ -9,11 +9,16 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "react-scripts start",
-    "json-server": "json-server --watch db.json --port 5000"
+    "json-server": "json-server --watch db.json --port 5000",
+    "start:api": "node auth.cjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.8.4",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "json-server": "^1.0.0-beta.3",
+    "jsonwebtoken": "^9.0.2",
     "prettier": "^3.5.3",
     "react": "^19.0.0",
     "react-beautiful-dnd": "^13.1.1",

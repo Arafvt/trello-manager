@@ -15,25 +15,31 @@
   cursor: grab;
 }
 
+.task.isDragging {
+  background: lightblue;
+}
+
 .task:active {
   cursor: grabbing;
 }
 
 .taskInput {
   flex-grow: 1;
-  padding: 6px 10px;
+  padding: 10px;
   font-size: 16px;
   border-radius: 6px;
-  width: 150px;  
+  width: 100%;
   border: 1px solid #ccc;
   background: #fff;
   color: #333;
   outline: none;
-  margin-right: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .taskInput:focus {
   border-color: #75c8bb;
+  box-shadow: 0 0 0 2px rgba(117, 200, 187, 0.2);
 }
 
 .saveBtn,
@@ -62,20 +68,27 @@
   color: white;
   cursor: pointer;
   transition: color 0.3s;
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .addTaskText:hover {
   color: #96d2c9;
 }
 
-.addTaskInputContainer {
+.addTaskContainer {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.buttonsRow {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  width: 100%;
 }
 
 .addTaskBtn {
-  padding: 8px 12px;
+  padding: 10px;
   background: #75c8bb;
   color: white;
   border: none;
@@ -83,6 +96,8 @@
   font-weight: bold;
   transition: background 0.3s, transform 0.2s;
   font-size: 14px;
+  flex: 1;
+  cursor: pointer;
 }
 
 .addTaskBtn:hover {
@@ -90,30 +105,40 @@
   transform: translateY(-1px);
 }
 
+.addTaskBtn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .cancelBtn {
-  width: 100%; 
-  padding: 8px 0;
-  background: transparent;
-  color: #d04e4e;
+  padding: 10px;
+  background: #f44336;
+  color: white;
   border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.3s ease;
   font-size: 14px;
   cursor: pointer;
-  transition: color 0.3s, transform 0.2s;
+  flex: 1;
 }
 
 .cancelBtn:hover {
-  color: #b03e3e;
+  background: #d32f2f;
   transform: translateY(-1px);
 }
 
 button:focus {
   outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-.error {
-  color: red;
-  margin: 10px 0;
-  font-weight: bold;
+.noTasks {
+  color: #888;
+  font-style: italic;
+  padding: 10px;
+  text-align: center;
 }
 
 :global(.dark) .task {
@@ -130,15 +155,35 @@ button:focus {
 :global(.dark) .saveBtn,
 :global(.dark) .deleteBtn,
 :global(.dark) .addTaskBtn {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #2a7a6d;
 }
 
 :global(.dark) .saveBtn:hover,
 :global(.dark) .deleteBtn:hover,
 :global(.dark) .addTaskBtn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #1f5c53;
 }
 
 :global(.dark) .addTaskText {
-  color: #c8f2ee;
+  color: white;
+}
+
+:global(.dark) .addTaskText:hover {
+  color: #96d2c9;
+}
+
+:global(.dark) .noTasks {
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .buttonsRow {
+    flex-direction: row;
+  }
+  
+  .addTaskBtn,
+  .cancelBtn {
+    padding: 8px;
+    font-size: 13px;
+  }
 }

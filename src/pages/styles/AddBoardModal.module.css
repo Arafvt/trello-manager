@@ -99,3 +99,25 @@
 :global(.dark) .addButton:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
+
+@media (max-width: 768px) {
+  .modalContent {
+    width: 90%;
+    max-width: 280px;
+    padding: 15px 20px;
+  }
+
+  .modalContent h2 {
+    font-size: 20px;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .saveButton, .cancelButton, .addButton {
+    width: 100%;
+    margin-left: 0;
+  }
+}

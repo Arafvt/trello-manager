@@ -29,17 +29,6 @@ export const updateColumn = async (columnId, newName) => {
   return response.data;
 };
 
-export const reorderColumns = async (boardId, columns) => {
-  const response = await axios.post(`${API_URL}/columns/reorder`, { 
-    boardId: String(boardId),
-    columns: columns.map(col => ({
-      id: String(col.id),
-      order: col.order
-    }))
-  });
-  return response.data;
-};
-
 // === Tasks API ===
 export const getTasks = async (columnId) => {
   const response = await axios.get(`${API_URL}/tasks`, { params: { columnId: String(columnId) } });
@@ -57,13 +46,5 @@ export const deleteTask = async (taskId) => {
 
 export const updateTask = async (taskId, newName) => {
   const response = await axios.patch(`${API_URL}/tasks/${taskId}`, { name: newName });
-  return response.data;
-};
-
-export const reorderTasks = async (columnId, tasks) => {
-  const response = await axios.post(`${API_URL}/tasks/reorder`, {
-    columnId: String(columnId),
-    tasks
-  });
   return response.data;
 };

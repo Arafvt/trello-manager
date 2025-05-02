@@ -2,7 +2,7 @@
   "boards": [
     {
       "id": "7a08",
-      "name": "goal"
+      "name": "GOAL"
     },
     {
       "id": "b629",
@@ -24,42 +24,22 @@
       "name": "home work"
     },
     {
-      "id": "281b",
-      "boardId": "7a08",
-      "name": "buy car"
-    },
-    {
-      "id": "bb7d",
-      "boardId": "7a08",
-      "name": "business"
-    },
-    {
       "id": "9fb2",
       "boardId": "7a08",
       "name": "Hadj"
+    },
+    {
+      "id": "d32d",
+      "boardId": "7a08",
+      "name": "Car"
+    },
+    {
+      "id": "9b64",
+      "boardId": "7a08",
+      "name": "Business"
     }
   ],
   "tasks": [
-    {
-      "id": "c578",
-      "columnId": "281b",
-      "name": "audi rs7"
-    },
-    {
-      "id": "ef66",
-      "columnId": "281b",
-      "name": "lexus 470"
-    },
-    {
-      "id": "2393",
-      "columnId": "bb7d",
-      "name": "clothes"
-    },
-    {
-      "id": "688f",
-      "columnId": "bb7d",
-      "name": "shoes"
-    },
     {
       "id": "6744",
       "columnId": "9fb2",
@@ -69,6 +49,21 @@
       "id": "e7f4",
       "columnId": "9fb2",
       "name": "hajj"
+    },
+    {
+      "id": "4a34",
+      "columnId": "d32d",
+      "name": "Audi rs 7"
+    },
+    {
+      "id": "6571",
+      "columnId": "d32d",
+      "name": "camry 80"
+    },
+    {
+      "id": "4862",
+      "columnId": "9b64",
+      "name": "Clothes"
     }
   ]
 }

@@ -9,6 +9,7 @@ import {
 } from "../store/boardsSlice";
 import { AddBoardModal } from "./AddBoardModal";
 import { EditBoardModal } from "./EditBoardModal";
+import { Header } from "../components/Header";
 import styles from "./styles/HomePage.module.css";
 
 export const HomePage = () => {

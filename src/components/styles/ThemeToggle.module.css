@@ -22,3 +22,9 @@
   background: #222831;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .themeToggleContainer {
+    margin-left: auto;
+  }
+}

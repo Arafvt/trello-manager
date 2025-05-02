@@ -1,110 +1,68 @@
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
   fetchTasks,
   createTask,
   removeTask,
-  editTask,
-  reorderTasks
+  editTask
 } from "../store/tasksSlice";
 import styles from "./styles/Task.module.css";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 
 export const Task = ({ columnId }) => {
   const dispatch = useDispatch();
-  const { items: tasks, status, error } = useSelector((state) => state.tasks);
+  const { items: tasks, status } = useSelector(state => state.tasks);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editedTaskName, setEditedTaskName] = useState("");
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [newTaskName, setNewTaskName] = useState("");
 
-  const columnTasks = useMemo(
-    () => tasks.filter((task) => String(task.columnId) === String(columnId)),
-    [tasks, columnId]
-  );
+  const columnTasks = tasks
+    .filter(task => String(task.columnId) === String(columnId));
 
   useEffect(() => {
-    if (!columnTasks.length || columnTasks.some((task) => String(task.columnId) !== String(columnId))) {
-      dispatch(fetchTasks(columnId));
-    }
+    dispatch(fetchTasks(columnId));
   }, [columnId, dispatch]);
 
-  const handleAddTask = useCallback(() => {
+  const handleAddTask = () => {
     if (!newTaskName.trim()) return;
     dispatch(createTask({ columnId, name: newTaskName }));
     setNewTaskName("");
-  }, [newTaskName, columnId, dispatch]);
+    setIsAddingTask(false);
+  };
 
-  const handleDeleteTask = useCallback((taskId) => {
+  const handleDeleteTask = (taskId) => {
     dispatch(removeTask(taskId));
-  }, [dispatch]);
+  };
 
-  const handleUpdateTask = useCallback((taskId) => {
+  const handleUpdateTask = (taskId) => {
     if (!editedTaskName.trim()) return;
     dispatch(editTask({ taskId, newName: editedTaskName }));
-  }, [editedTaskName, dispatch]);
+    setEditingTaskId(null);
+  };
 
-  const onDragEnd = useCallback(
-    async (result) => {
-      if (!result.destination) return;
-      
-      const draggedTask = columnTasks.find(t => String(t.id) === result.draggableId);
-      if (!draggedTask) return;
-  
-      const reorderedTasks = Array.from(columnTasks);
-      const [removed] = reorderedTasks.splice(result.source.index, 1);
-      reorderedTasks.splice(result.destination.index, 0, removed);
-  
-      try {
-        await dispatch(
-          reorderTasks({
-            columnId,
-            tasks: reorderedTasks.map((task, index) => ({
-              id: task.id,
-              order: index,
-            })),
-          })
-        );
-      } catch (error) {
-        console.error("Reorder failed:", error);
-      }
-    },
-    [columnTasks, columnId, dispatch]
-  );
-
-  if (status === "loading") {
-    return <div>Loading tasks...</div>;
-  }
-
-  if (status === "failed") {
-    return <div>Error: {error}</div>;
-  }
+  if (status === 'loading') return <div>Loading tasks...</div>;
+  if (status === 'failed') return <div>Error loading tasks</div>;
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={String(columnId)}>
+    <Droppable droppableId={String(columnId)} type="task">
       {(provided) => (
         <div
+          className={styles.tasksContainer}
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className={styles.tasksContainer}
         >
-          {status === "loading" && <div>Loading tasks...</div>}
-          {status === "succeeded" && columnTasks.length === 0 && (
+          {columnTasks.length === 0 && status === 'succeeded' && (
             <div className={styles.noTasks}>No tasks yet</div>
           )}
           {columnTasks.map((task, index) => (
-            <Draggable
-              key={String(task.id)}
-              draggableId={String(task.id)}
-              index={index}
-            >
+            <Draggable key={task.id} draggableId={String(task.id)} index={index}>
               {(provided) => (
                 <div
+                  className={styles.task}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
-                  className={styles.task}
                 >
                   {editingTaskId === task.id ? (
                     <>
@@ -114,12 +72,7 @@ export const Task = ({ columnId }) => {
                         onChange={(e) => setEditedTaskName(e.target.value)}
                         className={styles.taskInput}
                       />
-                      <button
-                        onClick={() => handleUpdateTask(task.id)}
-                        className={styles.saveBtn}
-                      >
-                        ✔️
-                      </button>
+                      <button onClick={() => handleUpdateTask(task.id)} className={styles.saveBtn}>✔️</button>
                     </>
                   ) : (
                     <>
@@ -131,12 +84,7 @@ export const Task = ({ columnId }) => {
                       >
                         {task.name}
                       </span>
-                      <button
-                        onClick={() => handleDeleteTask(task.id)}
-                        className={styles.deleteBtn}
-                      >
-                        х
-                      </button>
+                      <button onClick={() => handleDeleteTask(task.id)} className={styles.deleteBtn}>х</button>
                     </>
                   )}
                 </div>
@@ -146,12 +94,7 @@ export const Task = ({ columnId }) => {
           {provided.placeholder}
 
           {!isAddingTask ? (
-            <span
-              onClick={() => setIsAddingTask(true)}
-              className={styles.addTaskText}
-            >
-              + Add Task
-            </span>
+            <span onClick={() => setIsAddingTask(true)} className={styles.addTaskText}>+ Add Task</span>
           ) : (
             <div className={styles.addTaskInputContainer}>
               <input
@@ -161,24 +104,28 @@ export const Task = ({ columnId }) => {
                 className={styles.taskInput}
                 placeholder="Enter task name"
               />
-              <button onClick={handleAddTask} className={styles.addTaskBtn}>
-                Add
-              </button>
-              <button
-                onClick={() => {
-                  setIsAddingTask(false);
-                  setNewTaskName("");
-                }}
-                className={styles.cancelBtn}
-              >
-                х
-              </button>
+              <div className={styles.buttonsRow}>
+                <button 
+                  onClick={handleAddTask} 
+                  className={styles.addTaskBtn}
+                  disabled={!newTaskName.trim()}
+                >
+                  Add Task
+                </button>
+                <button
+                  onClick={() => {
+                    setIsAddingTask(false);
+                    setNewTaskName("");
+                  }}
+                  className={styles.cancelBtn}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           )}
         </div>
       )}
     </Droppable>
-    </DragDropContext>
-    
   );
 };
