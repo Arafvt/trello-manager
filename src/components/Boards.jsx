@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,7 +24,7 @@ export const Boards = ({ boardId, boardName }) => {
     dispatch(fetchColumns(boardId));
   }, [boardId, dispatch]);
 
-  const handleAddColumn = async () => {
+  const handleAddColumn = useCallback(async () => {
     if (!newColumnName.trim()) return;
     try {
       await dispatch(createColumn({ boardId, name: newColumnName })).unwrap();
@@ -32,24 +32,24 @@ export const Boards = ({ boardId, boardName }) => {
     } catch (err) {
       console.error("Failed to add column:", err);
     }
-  };
+  }, [dispatch, boardId, newColumnName]);
 
-  const handleDeleteColumn = (columnId) => {
+  const handleDeleteColumn = useCallback((columnId) => {
     dispatch(removeColumn(columnId));
-  };
+  }, [dispatch]);
 
-  const handleUpdateColumn = (columnId) => {
+  const handleUpdateColumn = useCallback((columnId) => {
     if (!editedColumnName.trim()) return;
     dispatch(editColumn({ columnId, newName: editedColumnName }));
     setEditingColumn(null);
-  };
+  }, [dispatch, editedColumnName]);
 
-  const handleDragEnd = (result) => {
+  const handleDragEnd = useCallback((result) => {
     if (!result.destination) return;
     const reordered = Array.from(columns);
     const [moved] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, moved);
-  };
+  }, [columns]);
 
   return (
     <div className={styles.boardContainer}>

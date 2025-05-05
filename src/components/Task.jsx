@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTasks,
@@ -24,22 +24,22 @@ export const Task = ({ columnId }) => {
     dispatch(fetchTasks(columnId));
   }, [columnId, dispatch]);
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     if (!newTaskName.trim()) return;
     dispatch(createTask({ columnId, name: newTaskName }));
     setNewTaskName("");
     setIsAddingTask(false);
-  };
+  }, [dispatch, columnId, newTaskName]);
 
-  const handleDeleteTask = (taskId) => {
+  const handleDeleteTask = useCallback((taskId) => {
     dispatch(removeTask(taskId));
-  };
+  }, [dispatch]);
 
-  const handleUpdateTask = (taskId) => {
+  const handleUpdateTask = useCallback((taskId) => {
     if (!editedTaskName.trim()) return;
     dispatch(editTask({ taskId, newName: editedTaskName }));
     setEditingTaskId(null);
-  };
+  }, [dispatch, editedTaskName]);
 
   if (status === 'loading') return <div>Loading tasks...</div>;
   if (status === 'failed') return <div>Error loading tasks</div>;

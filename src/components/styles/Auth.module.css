@@ -2,53 +2,122 @@
   max-width: 400px;
   margin: 80px auto;
   padding: 32px;
-  border: 1px solid #eee;
   border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.authContainer:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .authTitle {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-weight: 600;
-  color: #333;
+  color: white;
 }
 
 .authForm input {
   width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 16px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
-  transition: border-color 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.authForm input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .authForm input:focus {
-  border-color: #007bff;
+  border-color: #75c8bb;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .authButton {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  padding: 12px;
+  background-color: #75c8bb;
   color: white;
   border: none;
   font-weight: bold;
+  font-size: 15px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .authButton:hover {
-  background-color: #0056b3;
+  background-color: #5faea2;
+  transform: translateY(-1px);
 }
 
 .authMessage {
-  margin-top: 12px;
-  color: #d63031;
+  margin-top: 16px;
+  color: #ff6b6b;
   font-size: 14px;
+  font-weight: 500;
+}
+
+:global(.dark) .authContainer {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .authContainer:hover {
+  background-color: rgba(30, 30, 30, 0.9);
+}
+
+:global(.dark) .authForm input {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+}
+
+:global(.dark) .authForm input:focus {
+  background-color: rgba(30, 30, 30, 0.9);
+  border-color: #2a7a6d;
+}
+
+:global(.dark) .authButton {
+  background-color: #2a7a6d;
+}
+
+:global(.dark) .authButton:hover {
+  background-color: #1f5c53;
+}
+
+@media (max-width: 768px) {
+  .authContainer {
+    margin: 40px auto;
+    padding: 24px;
+    max-width: 90%;
+  }
+
+  .authTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .authForm input {
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .authButton {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
