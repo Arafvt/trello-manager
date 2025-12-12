@@ -1,12 +1,15 @@
-# React + Vite
+# Trello Manager (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for task management inspired by Trello. Allows users to create boards, columns, and cards, move tasks using drag and drop, and manage global state with Redux. User authentication is implemented.
 
-Currently, two official plugins are available:
+## Key features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Kanban board with columns and cards
 
-## Expanding the ESLint configuration
+- Drag and drop functionality
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Global state management with Redux
+
+- User authentication
+
+- React-based single-page application (SPA)
